@@ -1,34 +1,32 @@
-import java.nio.file.Paths;
+import java.sql.Statement;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.List;
 
 public class App {
     public static void main(String[] args) {
+        try (Connection connection = DatabaseConnection.getConnection();
+                Statement statement = connection.createStatement()) {
 
-        String titleBasicsFile = "data/title.basics.tsv/data.tsv";
+            String query = "SELECT primary_title FROM title_basics ORDER BY RAND() LIMIT 5";
 
-        ArrayList<String[]> basicsData = new ArrayList<>();
-        // each String[] == one movie
-        // [tconst, titleType, primaryTitle, orginalTitle, isAdult, startYear, endYear
-        // runtimeMinutes, genres]
+            ResultSet resultSet = statement.executeQuery(query);
 
-        try (Scanner scanner = new Scanner(Paths.get(titleBasicsFile))) {
-            while (scanner.hasNextLine()) {
-                System.out.println("file scanning");
-                String line = scanner.nextLine();
-                String[] parts = line.split("\t");
-                basicsData.add(parts);
+            List<String> randomTitles = new ArrayList<>();
+
+            while (resultSet.next()) {
+                String title = resultSet.getString("primary_title");
+                randomTitles.add(title);
             }
-        } catch (Exception e) {
-            System.out.println("Something went wrong");
-        }
 
-        // so the data may be too large, might have to trim it up
-        // find another way
-        // then start organizing the project into objects
-        // yep
-        System.out.println("ran");
-        System.out.println(basicsData.get(0)[0]);
-        System.out.println(basicsData.get(1)[0]);
+            System.out.println("5 Random Movie titles:");
+            for (String title : randomTitles) {
+                System.out.println(title);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
