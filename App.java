@@ -24,6 +24,7 @@ public class App {
         }
 
         // so the data may be too large, might have to trim it up
+        // find another way
         // then start organizing the project into objects
         // yep
         System.out.println("ran");
