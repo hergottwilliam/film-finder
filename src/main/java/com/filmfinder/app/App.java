@@ -36,7 +36,7 @@ public class App {
             }
         } catch (ClassNotFoundException e) {
             System.out.println("Failed to load MySQL JDBC driver.");
-            e.printStackTrace();  
+            e.printStackTrace();
 
         }
     }
