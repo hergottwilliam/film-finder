@@ -22,6 +22,7 @@ public class UserInterface {
                 this.movieMenu();
 
             } else if (input.equals("show")) {
+                this.showMenu();
 
             } else if (input.equals("quit")) {
                 System.out.println("Bye bye!");
@@ -43,11 +44,17 @@ public class UserInterface {
                 System.out.println("\nHere are your movie suggestions:\n");
                 List<String> randomMovies = this.finder.getRandomMovies(Integer.valueOf(input));
                 for (int i = 0; i < randomMovies.size(); i++) {
-                    System.out.println(i + ". " + randomMovies.get(i));
+                    System.out.println((i + 1) + ". " + randomMovies.get(i));
                 }
             } else {
                 System.out.println(input + " is not a valid command.");
             }
         }
+    }
+
+    public void showMenu() {
+        // get random episodes of a show
+        // need a finder method for this
+
     }
 }

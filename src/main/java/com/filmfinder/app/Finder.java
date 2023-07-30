@@ -10,6 +10,8 @@ import java.util.List;
 public class Finder {
     // i will clean this class up once i get a couple features
     // can i put the try and catch in the constructor? hopefully...
+    // this is the class where the application performance is most dependent
+    // improve queries to improve application speed
 
     public Finder() {
     }
