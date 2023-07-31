@@ -13,48 +13,37 @@ public class UserInterface {
     }
 
     public void start() {
-        System.out.println("\nFILM FINDER V.1\ntype 'quit' at anytime to quit program\n");
+        System.out.println("\nFILM FINDER V.1.0\n");
+        System.out.println("type 'quit' at anytime to quit\ntype 'help' for instructions");
 
         while (true) {
-            System.out.println("What would you like to watch? (show/movie)");
+            System.out.println("\n>");
+
             String input = scanner.nextLine();
-            if (input.equals("movie")) {
-                this.movieMenu();
 
-            } else if (input.equals("show")) {
-                this.showMenu();
-
-            } else if (input.equals("quit")) {
-                System.out.println("Bye bye!");
-                return;
-            } else {
-                System.out.println(input + " is not a recognized command.");
-            }
-        }
-    }
-
-    public void movieMenu() {
-        System.out.println("\nMOVIES\ntype 'quit' to return to main menu\n");
-        while (true) {
-            System.out.println("\nHow many movie suggestions would you like?");
-            String input = scanner.nextLine();
             if (input.equals("quit")) {
-                return;
-            } else if (Integer.valueOf(input) > 0) {
-                System.out.println("\nHere are your movie suggestions:\n");
-                List<String> randomMovies = this.finder.getRandomMovies(Integer.valueOf(input));
-                for (int i = 0; i < randomMovies.size(); i++) {
-                    System.out.println((i + 1) + ". " + randomMovies.get(i));
-                }
+                System.out.println("Bye bye!");
+                break;
+            } else if (input.equals("help")) {
+                String helpMessage = "\nFilm Finder is a movie selection tool, that provides random \nmovie suggestions. Type the number of random suggestions you would like.";
+                helpMessage += "\nFilm finder uses the non-commercial data provides by the IMDB movie database.";
+                System.out.println(helpMessage);
             } else {
-                System.out.println(input + " is not a valid command.");
+                try {
+                    int num = Integer.valueOf(input);
+                    System.out.println("\nLoading...\n");
+
+                    List<String> randomMovies = this.finder.getRandomMovies(Integer.valueOf(num));
+                    System.out.println("\nHere are your movie suggestions:\n");
+
+                    for (int i = 0; i < randomMovies.size(); i++) {
+                        System.out.println((i + 1) + ". " + randomMovies.get(i));
+                    }
+                } catch (Exception e) {
+                    System.out.println("\nTry a number...");
+                }
             }
         }
     }
 
-    public void showMenu() {
-        // get random episodes of a show
-        // need a finder method for this
-
-    }
 }
