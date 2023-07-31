@@ -16,38 +16,6 @@ public class Finder {
     public Finder() {
     }
 
-    public List<String> getRandomTitles(int num) {
-        // shows and movies
-
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-
-            try (Connection connection = DatabaseConnection.getConnection();
-                    Statement statement = connection.createStatement()) {
-
-                String query = "SELECT primary_title FROM title_basics ORDER BY RAND() LIMIT " + num;
-
-                ResultSet resultSet = statement.executeQuery(query);
-
-                List<String> randomTitles = new ArrayList<>();
-
-                while (resultSet.next()) {
-                    String title = resultSet.getString("primary_title");
-                    randomTitles.add(title);
-                }
-
-                return randomTitles;
-
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        } catch (ClassNotFoundException e) {
-            System.out.println("Failed to load MySQL JDBC driver.");
-            e.printStackTrace();
-        }
-        return null;
-    }
-
     public List<String> getRandomMovies(int num) {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -77,6 +45,36 @@ public class Finder {
             e.printStackTrace();
         }
         return null;
+    }
 
+    public List<String> getRandomMoviesOfGenre(int num, String genre) {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            try (Connection connection = DatabaseConnection.getConnection();
+                    Statement statement = connection.createStatement()) {
+
+                String query = "SELECT original_title FROM title_basics WHERE genres LIKE '" + genre
+                        + "' ORDER BY RAND() LIMIT " + num;
+
+                ResultSet resultSet = statement.executeQuery(query);
+
+                List<String> randomTitles = new ArrayList<>();
+
+                while (resultSet.next()) {
+                    String title = resultSet.getString("original_title");
+                    randomTitles.add(title);
+                }
+
+                return randomTitles;
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        } catch (ClassNotFoundException e) {
+            System.out.println("Failed to load MySQL JDBC driver.");
+            e.printStackTrace();
+        }
+        return null;
     }
 }
