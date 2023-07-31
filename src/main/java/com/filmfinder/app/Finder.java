@@ -55,7 +55,7 @@ public class Finder {
             try (Connection connection = DatabaseConnection.getConnection();
                     Statement statement = connection.createStatement()) {
 
-                String query = "SELECT primary_title FROM title_basics WHERE title_type = 'movie' ORDER BY RAND() LIMIT "
+                String query = "SELECT original_title FROM title_basics ORDER BY RAND() LIMIT "
                         + num;
 
                 ResultSet resultSet = statement.executeQuery(query);
@@ -63,7 +63,7 @@ public class Finder {
                 List<String> randomTitles = new ArrayList<>();
 
                 while (resultSet.next()) {
-                    String title = resultSet.getString("primary_title");
+                    String title = resultSet.getString("original_title");
                     randomTitles.add(title);
                 }
 
